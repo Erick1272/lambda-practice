@@ -12,14 +12,14 @@ namespace lambda_practice
 
             using (var ctx = new DatabaseContext())
             {
+                ctx.Database.Log = Console.Write;
                 //1. Listar todos los empleados cuyo departamento tenga una sede en Chihuahua
                 var query = ctx.Employees
                          .Where(c => c.City.Name == "Chihuahua")
                          .Select(s => new { s.Id, s.FirstName, s.LastName, s.City });
 
                 foreach (var employee in query){
-                    Console.WriteLine(" Id: {0} Name: {1} Last Name: {2} City Name: {3}",
-                    employee.Id, employee.FirstName, employee.LastName, employee.City.Name);
+                    Console.WriteLine("{0} {1} {2} {3}", employee.Id, employee.FirstName, employee.LastName, employee.City.Name);
                 }
 
                 //2. Listar todos los departamentos y el numero de empleados que pertenezcan a cada departamento.
@@ -28,8 +28,7 @@ namespace lambda_practice
                         .Select(s => new { DpName = s.Key, Count = s.Count() });
 
                 foreach (var Dept in query1){
-                    Console.WriteLine("Department: {0},  Count: {1}",
-                    Dept.DpName, Dept.Count);
+                    Console.WriteLine("{0} {1}", Dept.DpName, Dept.Count);
                 }
 
                 //3. Listar todos los empleados remotos. Estos son los empleados cuya ciudad no se encuentre entre las sedes de su departamento.
@@ -39,8 +38,7 @@ namespace lambda_practice
                    .Select(sede => new { sede.FirstName, sede.LastName });
 
                 foreach (var employee in query2){
-                    Console.WriteLine("Name: {0} Last Name: {1}  ",
-                    employee.FirstName, employee.LastName);
+                    Console.WriteLine("{0} {1}  ", employee.FirstName, employee.LastName);
                 }
 
 
@@ -49,8 +47,7 @@ namespace lambda_practice
                    .Where(e => e.HireDate.Month == 4);
 
                 foreach (var employee in query3){
-                    Console.WriteLine("Name: {0} Last Name: {1} Hire Date:  {2}",
-                    employee.FirstName, employee.LastName, employee.HireDate);
+                    Console.WriteLine("{0} {1} {2}", employee.FirstName, employee.LastName, employee.HireDate);
                 }
 
                 //Listar los 12 meses del año y el numero de empleados contratados por cada mes.
@@ -60,8 +57,7 @@ namespace lambda_practice
                         .Select(select => new { month = select.Key, Count = select.Count() });
 
                 foreach (var mes in query4){
-                    Console.WriteLine("Month: {0}, Employees: {1}",
-                     mes.month, mes.Count);
+                    Console.WriteLine("{0} {1}", mes.month, mes.Count);
                 }
 
             }
